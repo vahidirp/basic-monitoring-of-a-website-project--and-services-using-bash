@@ -1,7 +1,8 @@
 #!/bin/bash
 
-projectURL="http://your-web-project-url" # Replace with your website project's URL
+projectURL="http://your-website-project-url" # Replace with your website project's URL
 emailRecipient="your@email.com" # Replace with the recipient's email address
+logFile="/path/to/monitoring.log" # Replace with the path to the log file
 interval=300 # Monitoring interval in seconds (e.g., 300 seconds = 5 minutes)
 
 while true; do
@@ -16,10 +17,10 @@ while true; do
 
   if [ "$status_code" = "200" ]; then
     # Project is up
-    echo "Project is up."
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] Project is up. Ping: ${ping_time}ms, Load Time: ${load_time} seconds" >> "$logFile"
   else
     # Project is down
-    echo "Project is down. Sending email notification."
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] Project is down. Sending email notification." >> "$logFile"
     email_subject="Project Down Notification"
     email_body="The project is down.\nPing: ${ping_time}ms\nLoad Time: ${load_time} seconds\nPlease investigate."
 
